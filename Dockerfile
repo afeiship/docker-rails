@@ -10,6 +10,11 @@ ENV APP_HOME /app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
+# Add a script to be executed every time the container starts.
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+
 RUN gem install bundler:2.1.4
 ADD Gemfile* $APP_HOME/
 RUN bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java

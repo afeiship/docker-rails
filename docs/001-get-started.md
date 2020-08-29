@@ -3,6 +3,10 @@
 - https://github.com/vinsgit/docker_study
 - https://medium.com/@AnjLab/how-to-set-up-elk-for-rails-log-management-using-docker-and-docker-compose-a6edc290669f
 - http://equinox.one/blog/2016/04/20/Docker-with-Ruby-on-Rails-in-development-and-production/
+- https://nokogiri.org/tutorials/installing_nokogiri.html
+- https://stackoverflow.com/questions/35022428/rails-server-is-still-running-in-a-new-opened-docker-container
+- https://stackoverflow.com/questions/49316462/how-to-update-existing-images-with-docker-compose
+- https://semaphoreci.com/community/tutorials/dockerizing-a-ruby-on-rails-application
 
 ## steps
 1. copy `Dockerfile`

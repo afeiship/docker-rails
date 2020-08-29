@@ -10,6 +10,7 @@
   },
   "scripts": {
     "docker:up": "docker-compose up",
+    "docker:up-recreate": "docker-compose up --force-recreate",
     "docker:down": "docker-compose down ",
     "docker:start": "docker-compose up -d"
   },

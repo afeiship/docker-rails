@@ -17,4 +17,7 @@ RUN bundle install
 
 ADD . $APP_HOME
 RUN yarn install --check-files
+
+# start app
+CMD ["rm", "$APP_HOME/tmp/pids/server.pid"]
 CMD ["rails","server","-b","0.0.0.0"]

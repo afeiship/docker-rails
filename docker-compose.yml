@@ -2,10 +2,23 @@ version: "3"
 
 services:
   web:
-    build: .
+    build: 
+      context: ./docker
+      dockerfile: web/Dockerfile
     environment:
       RAILS_ENV: development
     ports:
       - "3000:3000"
     volumes:
       - .:/app
+  
+  nginx:
+    build: 
+      context: ./docker
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - /tmp/sockets:/app/tmp/sockets
+    depends_on:
+      - web

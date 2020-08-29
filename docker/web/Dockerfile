@@ -1,10 +1,10 @@
-FROM ruby:2.6.5-alpine
+FROM ruby:2.6.5
 
 # Update installation source for alpinelinux
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 # Install the dependencies
 RUN apk update && apk add bash
-RUN apk --update add build-base patch vim imagemagick tzdata nodejs yarn libxslt-dev yaml-dev sqlite-dev libxml2-dev 
+RUN apk --update add build-base patch vim imagemagick tzdata nodejs-current yarn libxslt-dev yaml-dev sqlite-dev libxml2-dev 
 #We use the command RUN on the Dockerfile to execute the commands we want to use in the image.
 
 ENV APP_HOME /app
@@ -12,7 +12,7 @@ RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 # Add a script to be executed every time the container starts.
-COPY web/entrypoint.sh /usr/bin/
+COPY docker/web/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 

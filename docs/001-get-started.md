@@ -1,6 +1,8 @@
 # get started
 - https://blog.cloud66.com/deploying-rails-6-assets-with-docker/
 - https://github.com/vinsgit/docker_study
+- https://medium.com/@AnjLab/how-to-set-up-elk-for-rails-log-management-using-docker-and-docker-compose-a6edc290669f
+- http://equinox.one/blog/2016/04/20/Docker-with-Ruby-on-Rails-in-development-and-production/
 
 ## steps
 1. copy `Dockerfile`

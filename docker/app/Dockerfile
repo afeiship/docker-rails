@@ -12,7 +12,7 @@ RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 # Add a script to be executed every time the container starts.
-COPY docker/web/entrypoint.sh /usr/bin/
+COPY docker/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 

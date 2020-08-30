@@ -1,29 +1,28 @@
-FROM ruby:2.6.5-alpine
+# Base image:
+FROM nginx
+# Install dependencies
+RUN apt-get update -qq && apt-get -y install apache2-utils
 
-# Update installation source for alpinelinux
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
-# Install the dependencies
-RUN apk update && apk add bash
-RUN apk --update add build-base patch vim imagemagick tzdata nodejs yarn libxslt-dev yaml-dev sqlite-dev libxml2-dev 
-#We use the command RUN on the Dockerfile to execute the commands we want to use in the image.
-
+# establish where Nginx should look for files
 ENV APP_HOME /app
-RUN mkdir $APP_HOME
+
+# Set our working directory inside the image
 WORKDIR $APP_HOME
 
-# Add a script to be executed every time the container starts.
-COPY docker/web/entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+# create log directory
+RUN mkdir log
 
-RUN gem install bundler:2.1.4
-ADD Gemfile* $APP_HOME/
-RUN bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java
-RUN bundle install
+# copy over static assets
+COPY public public/
 
-ADD . $APP_HOME
-RUN yarn install --check-files
+# Copy Nginx config template
+COPY docker/web/nginx.conf /tmp/docker.nginx
 
-# start app
-CMD ["rm", "$APP_HOME/tmp/pids/server.pid"]
-CMD ["rails","server","-b","0.0.0.0"]
+# substitute variable references in the Nginx config template for real values from the environment
+# put the final config in its place
+RUN envsubst '$APP_HOME' < /tmp/docker.nginx > /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+# Use the "exec" form of CMD so Nginx shuts down gracefully on SIGTERM (i.e. `docker stop`)
+CMD [ "nginx", "-g", "daemon off;" ]
